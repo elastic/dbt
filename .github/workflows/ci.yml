@@ -38,9 +38,9 @@ jobs:
 
     - name: Download Artifact
       uses: actions/download-artifact@master
-        with:
-          name: manifest
-          path: .
+      with:
+        name: manifest
+        path: .
 
     - name: Run & Test Modified Models # --full-refresh is default to enable building incremental models
       run: |
