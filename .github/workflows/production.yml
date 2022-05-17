@@ -41,9 +41,9 @@ jobs:
 
     - name: Download Artifact
       uses: actions/download-artifact@master
-        with:
-          name: manifest
-          path: .
+      with:
+        name: manifest
+        path: .
 
     - name: Run Modified Models Against Production & Generate Docs
       run: |
