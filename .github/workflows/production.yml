@@ -52,10 +52,10 @@ jobs:
 
     - name: Upload Artifact on Success
       if: ${{ success() }}
-      uses: actions/upload
-        with:
-          name: manifest
-          path: target/manifest.json
+      uses: actions/upload-artifact@master
+      with:
+        name: manifest
+        path: target/manifest.json
 
     - name: Notify Slack
       if: ${{ failure() }}
