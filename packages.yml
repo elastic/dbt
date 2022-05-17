@@ -1,0 +1,9 @@
+packages:
+  - package: fivetran/fivetran_log            # https://hub.getdbt.com/fivetran/fivetran_log/latest/
+    version: [">=0.5.0", "<0.6.0"]
+  - package: elementary-data/elementary       # https://hub.getdbt.com/elementary-data/elementary/latest/
+    version: [">=0.3.0", "<0.4.0"]
+  # - package: calogica/dbt_expectations        # https://hub.getdbt.com/calogica/dbt_expectations/latest/
+  #   version: [">=0.5.0", "<0.6.0"]
+  # - package: dbt-labs/codegen                 # https://hub.getdbt.com/dbt-labs/codegen/latest/
+  #   version: [">=0.6.0", "<0.7.0"]

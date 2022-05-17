@@ -1,0 +1,69 @@
+name: "Integration Testing"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  PR_NUMBER: CIRUN_${{ github.run_number }}
+  API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+  PROJECT: ${{ secrets.PROJECT }}
+  DATASET: ${{ secrets.DATASET }}
+  KEYFILE: ${{ secrets.KEYFILE }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout Repos
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.API_TOKEN_GITHUB }}
+
+    - name: Install Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8.12
+
+    - name: Install dbt
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        echo $KEYFILE > keyfile.json
+
+    - name: Download Artifact
+      uses: actions/download-artifact@master
+        with:
+          name: manifest
+          path: .
+
+    - name: Run & Test Modified Models # --full-refresh is default to enable building incremental models
+      run: |
+        dbt deps --profiles-dir .
+        dbt build --select state:modified+ --defer --state . --full-refresh --profiles-dir . --target ci
+
+    - name: Clean Up
+      run: |
+        pip install -r ./scripts/drop_ci_schema/requirements.txt
+        python ./scripts/drop_ci_schema/drop_ci_schema.py
+        rm keyfile.json
+
+    - name: Merge Pull Request On Pass
+      if: ${{ success() }}
+      uses: juliangruber/merge-pull-request-action@v1
+      with:
+        github-token: ${{ secrets.API_TOKEN_GITHUB }}
+        number: ${{ github.event.number }}
+        method: squash
+
+    - name: Notify Slack On Fail
+      if: ${{ failure() }}
+      uses: craftech-io/slack-action@v1
+      with:
+        slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+        status: failure

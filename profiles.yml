@@ -1,0 +1,29 @@
+# https://docs.getdbt.com/reference/warehouse-profiles/bigquery-profile
+
+config:
+    use_colors: False
+    send_anonymous_usage_stats: False
+
+default:
+  target: prod
+  outputs:
+    prod:
+      type: bigquery
+      method: service-account
+      keyfile: [keyfile.json]
+      project: "{{ env_var('PROJECT') }}"
+      dataset: "{{ env_var('DATASET') }}" # You can also use "schema" here
+      threads: 16
+      priority: interactive
+      job_execution_timeout_seconds: 600 # 10 minutes
+      location: US
+    ci:
+      type: bigquery
+      method: service-account
+      keyfile: [keyfile.json]
+      project: "{{ env_var('PROJECT') }}"
+      dataset: "{{ env_var('DATASET') }}" # You can also use "schema" here
+      threads: 8
+      priority: interactive
+      job_execution_timeout_seconds: 600 # 10 minutes
+      location: US

@@ -1,0 +1,65 @@
+name: "Production Run"
+
+on:
+  pull_request:
+    types: [closed]
+  
+  workflow_dispatch:
+
+env:
+  API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+  PROJECT: ${{ secrets.PROJECT }}
+  DATASET: ${{ secrets.DATASET }}
+  KEYFILE: ${{ secrets.KEYFILE }}
+  DBT_USE_COLORS: "false"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+
+    - name: Install Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8.12
+
+    - name: Checkout Repos
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.API_TOKEN_GITHUB }}
+
+    - name: Install dbt
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        echo $KEYFILE > keyfile.json
+
+    - name: Download Artifact
+      uses: actions/download-artifact@master
+        with:
+          name: manifest
+          path: .
+
+    - name: Run Modified Models Against Production & Generate Docs
+      run: |
+        dbt deps --profiles-dir . 
+        dbt build --select state:modified+ --state . --full-refresh --profiles-dir . --target prod
+
+    - name: Upload Artifact on Success
+      if: ${{ success() }}
+      uses: actions/upload
+        with:
+          name: manifest
+          path: target/manifest.json
+
+    - name: Notify Slack
+      if: ${{ failure() }}
+      uses: craftech-io/slack-action@v1
+      with:
+        slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+        status: failure
