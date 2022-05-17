@@ -1,4 +1,4 @@
-name: "Daily Build"
+name: "Build: Daily"
 
 on:
   schedule:
