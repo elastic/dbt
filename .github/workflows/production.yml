@@ -4,19 +4,15 @@ on:
   pull_request:
     types: [closed]
   
-  workflow_dispatch:
-
 env:
-  API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   PROJECT: ${{ secrets.PROJECT }}
   DATASET: ${{ secrets.DATASET }}
   KEYFILE: ${{ secrets.KEYFILE }}
-  DBT_USE_COLORS: "false"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         shell: bash
@@ -57,7 +53,7 @@ jobs:
         name: manifest
         path: target/manifest.json
 
-    - name: Notify Slack
+    - name: Notify Slack On Fail
       if: ${{ failure() }}
       uses: craftech-io/slack-action@v1
       with:

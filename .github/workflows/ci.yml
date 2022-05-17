@@ -7,7 +7,7 @@ on:
 
 env:
   PR_NUMBER: CIRUN_${{ github.run_number }}
-  API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   PROJECT: ${{ secrets.PROJECT }}
   DATASET: ${{ secrets.DATASET }}
   KEYFILE: ${{ secrets.KEYFILE }}
