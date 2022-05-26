@@ -1,43 +1,79 @@
-name: 'dbt'
+# Big Query Specific Configs
+# https://docs.getdbt.com/reference/resource-configs/bigquery-configs
+
+name: 'elastic_dbt'
 version: '1.0.0'
 config-version: 2
 profile: 'dbt'
+
+# =====
+# Paths
+# =====
+
 model-paths: ["models"]
-analysis-paths: ["analyses"]
-target-path: ["target"]
-test-paths: ["tests"]
 seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 docs-paths: ["docs"]
+asset-paths: ["assets"]
 clean-targets: ["target", "dbt_packages", "logs"]
 
+# ======
+# Models (https://docs.getdbt.com/reference/model-configs)
+# ======
+
+models:
+  elastic_dbt:
+    tmp:
+      +materialized: view
+    stg:
+      +materialized: view
+    warehouse:
+      +materialized: view
+
+# =====
+# Seeds (https://docs.getdbt.com/reference/seed-configs)
+# =====
+
+seeds:
+  +enabled: true  
+  +full_refresh: true
+
+# =========
+# Snapshots (https://docs.getdbt.com/reference/snapshot-configs)
+# =========
+
+# =======
+# Sources (https://docs.getdbt.com/reference/source-configs)
+# =======
+
+# =====
+# Tests (https://docs.getdbt.com/reference/test-configs)
+# =====
+
+# =========
+# Variables (https://docs.getdbt.com/docs/building-a-dbt-project/building-models/using-variables)
+# =========
+
 vars:
-  fivetran_log:
-    fivetran_log_database: x
-    fivetran_log_schema: x
-    fivetran_log_using_transformations: false
-    fivetran_log_using_triggers: false
-    fivetran_log_using_sync_alert_messages: false
-  monitoring_configuration: monitoring_configuration
-  dbt_artifacts_database: source_system
-  dbt_artifacts_schema: monitoring
   'dbt_date:time_zone': 'America/Los_Angeles'
+  # monitoring_configuration: monitoring_configuration
+  # dbt_artifacts_database: elastic-bi
+  # dbt_artifacts_schema: dbt
+
+# ============
+# On Run Start (https://docs.getdbt.com/reference/project-configs/on-run-start-on-run-end)
+# ============
+
+# ==========
+# On Run End (https://docs.getdbt.com/reference/project-configs/on-run-start-on-run-end)
+# ==========
 
 on-run-end:
   - "{{ elementary.upload_dbt_artifacts(results) }}"
 
-models:
-  dbt:
-    marketing:
-      +materialized: view
-    revenue:
-      +materialized: view
-
-# ======
-# Seed Configs
-# ======
-seeds:
-  +enabled: true  
-  +database: x
-  +schema: x
+# ========
+# Dispatch (https://docs.getdbt.com/reference/project-configs/dispatch-config)
+# ========
