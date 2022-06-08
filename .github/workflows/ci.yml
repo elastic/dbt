@@ -6,10 +6,8 @@ on:
       - main
 
 env:
-  PR_NUMBER: CIRUN_${{ github.run_number }}
+  DATASET: CIRUN_${{ github.run_number }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  PROJECT: ${{ secrets.PROJECT }}
-  DATASET: ${{ secrets.DATASET }}
   KEYFILE: ${{ secrets.KEYFILE }}
 
 jobs:

@@ -10,3 +10,4 @@ secrets.json
 .DS_Store
 *.zip
 zip/
+keyfile.json

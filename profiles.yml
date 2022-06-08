@@ -10,20 +10,20 @@ default:
     prod:
       type: bigquery
       method: service-account
-      keyfile: [keyfile.json]
-      project: "{{ env_var('PROJECT') }}"
-      dataset: "{{ env_var('DATASET') }}" # You can also use "schema" here
+      project: esbi-test
+      dataset: edm_dbt_admin
       threads: 16
+      keyfile: ./keyfile.json
       priority: interactive
       job_execution_timeout_seconds: 600 # 10 minutes
       location: US
     ci:
       type: bigquery
       method: service-account
-      keyfile: [keyfile.json]
-      project: "{{ env_var('PROJECT') }}"
-      dataset: "{{ env_var('DATASET') }}" # You can also use "schema" here
-      threads: 8
+      project: esbi-test
+      dataset: "{{ env_var('DATASET') }}"
+      threads: 16
+      keyfile: ./keyfile.json
       priority: interactive
       job_execution_timeout_seconds: 600 # 10 minutes
       location: US

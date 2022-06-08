@@ -9,8 +9,6 @@ on:
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  PROJECT: ${{ secrets.PROJECT }}
-  DATASET: ${{ secrets.DATASET }}
   KEYFILE: ${{ secrets.KEYFILE }}
 
 jobs:
