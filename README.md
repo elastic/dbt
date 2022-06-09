@@ -3,11 +3,11 @@
 - [Command line cheat sheet](#command-line-cheat-sheet)
 - [Resources](#resources)
 
-# [Checkout Elastic's dbt Docs Site](https://elastic.github.io/dbt/)
+# <a href="(https://elastic.github.io/dbt/" target="_blank">Checkout Elastic's dbt Docs Site</a>
 
 ## Why dbt?
 
-dbt, short for data build tool, is an open source project for managing data transformations in a data warehouse. Once data is loaded into a warehouse, dbt enables teams to manage all data transformations required for driving analytics. It also comes with built in testing and documentation so we can have a high level of confidence in the tables we're generating and analyzing.
+dbt, short for data build tool, is an open source project for managing data transformations in a data warehouse. Once data is loaded into a warehouse, dbt enables build, test, document, and trust all data in the datawarehouse. It also comes with a built in documentation site so we can democratize the knowledge we accumulated about our data to the consumers of data in the business.
 
 The following links will give you an excellent overview of what dbt is:
 
@@ -16,7 +16,7 @@ The following links will give you an excellent overview of what dbt is:
 
 But why do we use dbt? There are several reasons.
 
-First is that it is an open source tool with a vibrant community just like Elastic! Choosing an open source tool enables us to collaborate with the larger data community and solve problems faster than had we gone with a proprietary solution.
+First is that it is an open source tool with a vibrant community just like Elastic! Choosing an open source tool enables us to collaborate with the larger data community and solve problems faster than if we had gone with a proprietary solution.
 
 Second, it was built with version control in mind. For Elastic, this is essential since we use the output of our CDW for running the company.
 
