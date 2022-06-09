@@ -41,7 +41,6 @@ jobs:
       run: |
         dbt build --select state:modified+ --state ./docs --full-refresh --profiles-dir . --target prod
         dbt docs generate --profiles-dir . --target prod
-        cp ./target/index.html ./docs/index.html
         cp ./target/manifest.json ./docs/manifest.json
         cp ./target/catalog.json ./docs/catalog.json
 
