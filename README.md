@@ -1,9 +1,9 @@
+# [Elastic's dbt Docs Site](https://elastic.github.io/dbt/)
+
 - [Why dbt?](#why-dbt)
 - [Scheduling dbt build jobs](#scheduling-dbt-build-jobs)
 - [Command line cheat sheet](#command-line-cheat-sheet)
 - [Resources](#resources)
-
-# [Elastic's dbt Docs Site](https://elastic.github.io/dbt/)
 
 ## Why dbt?
 
