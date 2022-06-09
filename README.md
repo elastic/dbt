@@ -3,7 +3,7 @@
 - [Command line cheat sheet](#command-line-cheat-sheet)
 - [Resources](#resources)
 
-# [Checkout Elastics dbt Docs Site](https://elastic.github.io/dbt/)
+# [Checkout Elastic's dbt Docs Site](https://elastic.github.io/dbt/)
 
 ## Why dbt?
 
