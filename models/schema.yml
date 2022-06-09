@@ -1,0 +1,19 @@
+version: 2
+
+macros:
+  - name: generate_database_name
+    description: A macro that writes to the database defined in your target unless the target is equal to prod. When the target is prod, it writes the output of dbt into the destination database defined in dbt_project.yml
+    arguments:
+      - name: custom_database_name
+        description: This is automatically populated with by the target context.
+      - name: node
+        description: This is automatically populated with by the target context.
+  - name: generate_schema_name
+    description: A macro that writes to the schema defined in your target unless the target is equal to prod. When the target is prod, it writes the output of dbt into the destination schema defined in dbt_project.yml
+    arguments:
+      - name: custom_schema_name
+        description: This is automatically populated with by the target context.
+      - name: node
+        description: This is automatically populated with by the target context.
+
+        
