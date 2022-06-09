@@ -31,7 +31,7 @@ jobs:
       run: |
         echo $KEYFILE > keyfile.json
         dbt deps --profiles-dir .
-        dbt build --select state:modified+ --defer --state ./state --full-refresh --profiles-dir . --target ci
+        dbt build --select state:modified+ --defer --state ./docs --full-refresh --profiles-dir . --target ci
       env:
         DATASET: CIRUN_${{ github.run_number }}
         KEYFILE: ${{ secrets.KEYFILE }}
@@ -39,7 +39,7 @@ jobs:
     - name: Build Production Changes & Update Manifest
       if: ${{ success() }}
       run: |
-        dbt build --select state:modified+ --state ./state --full-refresh --profiles-dir . --target prod
+        dbt build --select state:modified+ --state ./docs --full-refresh --profiles-dir . --target prod
         dbt docs generate --profiles-dir . --target prod
         cp ./target/index.html ./state/index.html
         cp ./target/manifest.json ./state/manifest.json
