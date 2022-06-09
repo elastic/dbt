@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+.logo {
+    background-image: url(https://github.com/elastic/dbt/raw/main/assets/elastic-logo-big.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: contain;
+}
+img.logo {
+    display: none ;
+}
+
+body {
+    font-family: 'Source Sans Pro' !important;
+  font-size: 17px;
+}
+h1, h2, h3, h4, h5, h6, {
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+}
+p {
+    font-family: 'Source Sans Pro';
+  font-size: 16px;
+}
+
+.btn-info {
+    background-color: hsl(170, 38%, 60%) !important;
+}
+.form-control:focus {
+    box-shadow: 0 0 0 2px hsl(170, 38%, 60%), 0 15px 15px -7.5px rgba(0,0,0,0.15) !important;
+}
+.a {
+    color: hsl(170, 38%, 60%) !important;
+}
+.app-content p {
+    color: #1f1f1f;
+}
+.app-content a {
+    color: hsl(170, 38%, 60%) !important;
+}
+
+.menu a.menu-node.active:not(.not-active) {
+    color: hsl(170, 38%, 60%) !important;
+}
+.menu a {
+    color: #1f1f1f !important;
+}
+.tooltip {
+    background-color: hsl(170, 38%, 60%) !important;
+}
+.launcher-window {
+    background-color: #0f4d66 !important;
+}
+.bg-navy {
+    background-color: #0f4d66 !important;
+}
+.text-navy-lightest {
+    color: #367cc2 !important;
+}
