@@ -1,1 +1,0 @@
-google-cloud-bigqueryn~=3.1.0

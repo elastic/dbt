@@ -5,11 +5,6 @@ on:
     branches:
       - main
 
-env:
-  DATASET: CIRUN_${{ github.run_number }}
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  KEYFILE: ${{ secrets.KEYFILE }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +13,7 @@ jobs:
         shell: bash
 
     steps:
-    - name: Checkout Repos
+    - name: Checkout Repo
       uses: actions/checkout@v2
       with:
         token: ${{ secrets.API_TOKEN_GITHUB }}
@@ -30,26 +25,33 @@ jobs:
 
     - name: Install dbt
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        python -m pip install --upgrade pip && pip install -r requirements.txt
+
+    - name: Test Building Modified Models
+      run: |
         echo $KEYFILE > keyfile.json
-
-    - name: Download Artifact
-      uses: actions/download-artifact@master
-      with:
-        name: manifest
-        path: .
-
-    - name: Run & Test Modified Models # --full-refresh is default to enable building incremental models
-      run: |
         dbt deps --profiles-dir .
-        dbt build --select state:modified+ --defer --state . --full-refresh --profiles-dir . --target ci
+        dbt build --select state:modified+ --defer --state ./state --full-refresh --profiles-dir . --target ci
+      env:
+        DATASET: CIRUN_${{ github.run_number }}
+        KEYFILE: ${{ secrets.KEYFILE }}
 
-    - name: Clean Up
+    - name: Build Production Changes & Update Manifest
+      if: ${{ success() }}
       run: |
-        pip install -r ./scripts/drop_ci_schema/requirements.txt
-        python ./scripts/drop_ci_schema/drop_ci_schema.py
-        rm keyfile.json
+        dbt build --select state:modified+ --state ./state --full-refresh --profiles-dir . --target prod
+        dbt docs generate --profiles-dir . --target prod
+        cp ./target/index.html ./state/index.html
+        cp ./target/manifest.json ./state/manifest.json
+        cp ./target/catalog.json ./state/catalog.json
+
+    - name: Add & Commit New Manifest
+      if: ${{ success() }}
+      uses: EndBug/add-and-commit@v9
+      with:
+        author_name: dbt CI
+        author_email: actions@github.com
+        message: 'Update Production Manifest'
 
     - name: Merge Pull Request On Pass
       if: ${{ success() }}
@@ -58,10 +60,3 @@ jobs:
         github-token: ${{ secrets.API_TOKEN_GITHUB }}
         number: ${{ github.event.number }}
         method: squash
-
-    - name: Notify Slack On Fail
-      if: ${{ failure() }}
-      uses: craftech-io/slack-action@v1
-      with:
-        slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        status: failure

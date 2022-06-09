@@ -26,18 +26,23 @@ clean-targets: ["target", "dbt_packages", "logs"]
 
 models:
   elastic_dbt:
+    +hours_to_expiration: "{{ 1 if target.name == 'ci' else None }}"
+    +tags: dbt
     tmp:
-      +materialized: view
+      +schema: dbt_tmp
     stg:
-      +materialized: view
+      +schema: dbt_stg
     warehouse:
-      +materialized: view
+      +schema: dbt_warehouse
 
 # =====
 # Seeds (https://docs.getdbt.com/reference/seed-configs)
 # =====
 
 seeds:
+  +schema: dbt_seeds
+  +hours_to_expiration: "{{ 1 if target.name == 'ci' else None }}"
+  +tags: dbt
   +enabled: true  
   +full_refresh: true
 
