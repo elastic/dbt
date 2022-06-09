@@ -3,7 +3,7 @@
 - [Command line cheat sheet](#command-line-cheat-sheet)
 - [Resources](#resources)
 
-# <a href="(https://elastic.github.io/dbt/" target="_blank">Checkout Elastic's dbt Docs Site</a>
+# [Elastic's dbt Docs Site](https://elastic.github.io/dbt/")
 
 ## Why dbt?
 
@@ -16,7 +16,7 @@ The following links will give you an excellent overview of what dbt is:
 
 But why do we use dbt? There are several reasons.
 
-First is that it is an open source tool with a vibrant community just like Elastic! Choosing an open source tool enables us to collaborate with the larger data community and solve problems faster than if we had gone with a proprietary solution.
+First is that it is an open source tool with a vibrant community just like Elastic! Choosing an open source tool enables us to collaborate with the larger data community and solve problems faster than if we had we gone with a proprietary solution.
 
 Second, it was built with version control in mind. For Elastic, this is essential since we use the output of our CDW for running the company.
 
