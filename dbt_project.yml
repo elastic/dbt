@@ -26,7 +26,6 @@ clean-targets: ["target", "dbt_packages", "logs"]
 
 models:
   elastic_dbt:
-    +hours_to_expiration: "{{ 1 if target.name == 'ci' else None }}"
     tmp:
       +schema: dbt_tmp
     stg:
@@ -40,7 +39,6 @@ models:
 
 seeds:
   +schema: dbt_seeds
-  +hours_to_expiration: "{{ 1 if target.name == 'ci' else None }}"
   +enabled: true  
   +full_refresh: true
 
