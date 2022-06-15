@@ -15,7 +15,7 @@ default:
       threads: 16
       keyfile: ./keyfile.json
       priority: interactive
-      job_execution_timeout_seconds: 600 # 10 minutes
+      job_execution_timeout_seconds: 300 # 5 minutes
       location: US
     ci:
       type: bigquery
@@ -25,5 +25,5 @@ default:
       threads: 16
       keyfile: ./keyfile.json
       priority: interactive
-      job_execution_timeout_seconds: 600 # 10 minutes
+      job_execution_timeout_seconds: 300 # 5 minutes
       location: US
